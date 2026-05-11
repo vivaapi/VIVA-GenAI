@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>ViVa AI助手</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'brand-yellow': '#F7CE00',
+              'brand-red': '#E5312F',
+              'brand-black': '#000000',
+              'brand-purple': '#A855F7',
+              'brand-green': '#4ADE80',
+              'brand-cream': '#FEFCE8',
+              'brand-blue': '#3B82F6',
+              'brand-pink': '#F472B6'
+            },
+            animation: {
+              'spin-slow': 'spin 4s linear infinite',
+              'brutalist-pulse': 'brutalist-pulse 1.5s ease-in-out infinite',
+              'marquee': 'marquee 20s linear infinite',
+            },
+            keyframes: {
+              marquee: {
+                '0%': { transform: 'translateX(100%)' },
+                '100%': { transform: 'translateX(-100%)' }
+              },
+              'brutalist-pulse': {
+                '0%, 100%': { 
+                  transform: 'scale(1)',
+                  boxShadow: 'none',
+                  backgroundColor: '#ffffff'
+                },
+                '50%': { 
+                  transform: 'scale(1.1)',
+                  boxShadow: '0px 0px 20px 8px rgba(229, 49, 47, 0.4)',
+                  backgroundColor: '#fff1f2'
+                },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+
+      :root {
+        --brand-yellow: #F7CE00;
+        --brand-red: #E5312F;
+        --brand-black: #000000;
+        --brand-purple: #A855F7;
+        --brand-green: #4ADE80;
+        --brand-cream: #FEFCE8;
+        --brand-blue: #3B82F6;
+        --brand-pink: #F472B6;
+        --brand-bg: #F8FAFC;
+        --brand-bg-dark: #F1F5F9;
+      }
+
+      body {
+        background-color: var(--brand-bg);
+        background-image: radial-gradient(#CBD5E1 1px, transparent 1px);
+        background-size: 24px 24px;
+        font-family: 'Microsoft YaHei', '微软雅黑', 'Arial', sans-serif;
+      }
+
+      .brutalist-border {
+        border: 2px solid var(--brand-black);
+      }
+
+      .brutalist-shadow {
+        box-shadow: none;
+      }
+
+      .brutalist-shadow-sm {
+        box-shadow: none;
+      }
+
+      .comic-title {
+        font-family: 'Arial', sans-serif;
+        text-transform: uppercase;
+        font-style: normal;
+        letter-spacing: -0.02em;
+      }
+
+      .solid-box-green {
+        border: 2px solid var(--brand-green);
+      }
+
+      .solid-box-purple {
+        border: 2px solid var(--brand-purple);
+      }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--brand-bg-dark);
+        border-left: 1px solid var(--brand-black);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: black;
+        border: 1px solid white;
+      }
+
+      .no-scrollbar::-webkit-scrollbar {
+          display: none;
+      }
+      
+      .brutalist-input:focus {
+        background-color: var(--brand-cream);
+        border-color: var(--brand-black);
+      }
+
+      /* Ensure clear style baseline */
+      * {
+        font-style: normal !important;
+      }
+
+      /* Chat Input Scrollbar */
+      .chat-input-scrollbar::-webkit-scrollbar {
+        width: 4px;
+      }
+      .chat-input-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+        border: none;
+      }
+      .chat-input-scrollbar::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 2px;
+        border: none;
+      }
+      .chat-input-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+      }
+
+      /* Markdown Styles */
+      .markdown-body {
+        font-family: inherit;
+        line-height: 1.6;
+        color: inherit;
+      }
+      .markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4 {
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+        line-height: 1.25;
+        color: #000;
+      }
+      .markdown-body h1 { font-size: 1.5rem; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; }
+      .markdown-body h2 { font-size: 1.25rem; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; }
+      .markdown-body h3 { font-size: 1.125rem; }
+      .markdown-body p { margin-top: 0; margin-bottom: 1rem; }
+      .markdown-body ul, .markdown-body ol { padding-left: 2em; margin-top: 0; margin-bottom: 1rem; }
+      .markdown-body li { margin-top: 0.25em; }
+      .markdown-body code {
+        padding: 0.2em 0.4em;
+        margin: 0;
+        font-size: 85%;
+        background-color: rgba(175, 184, 193, 0.2);
+        border-radius: 6px;
+        font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+      }
+      .markdown-body pre {
+        padding: 16px;
+        overflow: auto;
+        font-size: 85%;
+        line-height: 1.45;
+        background-color: #f6f8fa;
+        border-radius: 6px;
+        margin-bottom: 1rem;
+      }
+      .markdown-body pre code {
+        padding: 0;
+        margin: 0;
+        background-color: transparent;
+        border: 0;
+        font-size: 100%;
+        word-break: normal;
+        white-space: pre;
+      }
+      .markdown-body blockquote {
+        padding: 0 1em;
+        color: #6a737d;
+        border-left: 0.25em solid #dfe2e5;
+        margin: 0 0 1rem 0;
+      }
+      .markdown-body table {
+        border-spacing: 0;
+        border-collapse: collapse;
+        margin-top: 0;
+        margin-bottom: 1rem;
+        width: 100%;
+      }
+      .markdown-body table th, .markdown-body table td {
+        padding: 6px 13px;
+        border: 1px solid #dfe2e5;
+      }
+      .markdown-body table tr {
+        background-color: #fff;
+        border-top: 1px solid #c6cbd1;
+      }
+      .markdown-body table tr:nth-child(2n) {
+        background-color: #f6f8fa;
+      }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.561.0",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "vite": "https://esm.sh/vite@^7.3.0",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
+  }
+}
+</script>
+</head>
+<body class="text-black bg-[#F8FAFC]">
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
